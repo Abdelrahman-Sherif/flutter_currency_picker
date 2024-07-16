@@ -52,6 +52,7 @@ void showCurrencyPicker({
   required ValueChanged<Currency> onSelect,
   List<String>? favorite,
   List<String>? currencyFilter,
+  List<String>? blackList,
   bool showSearchField = true,
   bool showFlag = true,
   bool showCurrencyName = true,
@@ -61,7 +62,7 @@ void showCurrencyPicker({
   CurrencyPickerThemeData? theme,
   @Deprecated(
     'Use inputDecoration instead. '
-        'This feature was deprecated after v2.0.18.',
+    'This feature was deprecated after v2.0.18.',
   )
   String? searchHint,
 }) {
@@ -80,6 +81,7 @@ void showCurrencyPicker({
     useRootNavigator: useRootNavigator,
     favorite: favorite,
     currencyFilter: currencyFilter,
+    blackList: blackList,
     theme: theme,
     physics: physics,
   );

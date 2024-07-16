@@ -22,6 +22,11 @@ class CurrencyListView extends StatefulWidget {
   /// It takes a list of Currency code.
   final List<String>? currencyFilter;
 
+  /// Can be used to blacklist some currencies (optional).
+  ///
+  /// It takes a list of Currency code.
+  final List<String> blackList;
+
   /// Shows flag for each currency (optional).
   ///
   /// Defaults true.
@@ -60,6 +65,7 @@ class CurrencyListView extends StatefulWidget {
     required this.onSelect,
     this.favorite,
     this.currencyFilter,
+    this.blackList = const <String>[],
     this.showSearchField = true,
     this.searchHint,
     this.showCurrencyCode = true,
@@ -104,6 +110,12 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     }
 
     _filteredList.addAll(_currencyList);
+    if (widget.blackList.isNotEmpty) {
+      _filteredList.removeWhere(
+        (element) => widget.blackList.contains(element.code),
+      );
+    }
+
     super.initState();
   }
 
@@ -123,16 +135,17 @@ class _CurrencyListViewState extends State<CurrencyListView> {
           child: widget.showSearchField
               ? TextField(
                   controller: _searchController,
-                  decoration: widget.theme?.inputDecoration ?? InputDecoration(
-                    labelText: widget.searchHint ?? "Search",
-                    hintText: widget.searchHint ?? "Search",
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: const Color(0xFF8C98A8).withOpacity(0.2),
+                  decoration: widget.theme?.inputDecoration ??
+                      InputDecoration(
+                        labelText: widget.searchHint ?? "Search",
+                        hintText: widget.searchHint ?? "Search",
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: const Color(0xFF8C98A8).withOpacity(0.2),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
                   onChanged: _filterSearchResults,
                 )
               : Container(),
