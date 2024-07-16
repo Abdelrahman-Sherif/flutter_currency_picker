@@ -95,6 +95,12 @@ class _CurrencyListViewState extends State<CurrencyListView> {
 
     _currencyList = _currencyService.getAll();
 
+    if (widget.blackList.isNotEmpty) {
+      _currencyList.removeWhere(
+        (element) => widget.blackList.contains(element.code),
+      );
+    }
+
     _filteredList = <Currency>[];
 
     if (widget.currencyFilter != null) {
@@ -110,11 +116,6 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     }
 
     _filteredList.addAll(_currencyList);
-    if (widget.blackList.isNotEmpty) {
-      _filteredList.removeWhere(
-        (element) => widget.blackList.contains(element.code),
-      );
-    }
 
     super.initState();
   }
