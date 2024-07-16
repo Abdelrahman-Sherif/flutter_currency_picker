@@ -76,6 +76,7 @@ Widget _builder(
       showCurrencyCode: showCurrencyCode,
       favorite: favorite,
       currencyFilter: currencyFilter,
+      blackList: blackList ?? [],
       physics: physics,
       theme: theme,
     ),
